@@ -1,70 +1,52 @@
 import { useRef, useEffect } from "react";
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const VideoPinSection = () => {
-  const videoContainerRef = useRef(null);
-  const videoBoxRef = useRef(null);
+  const containerRef = useRef(null);
   const videoRef = useRef(null);
 
-  useGSAP(() => {
-    const container = videoContainerRef.current;
-    const videoBox = videoBoxRef.current;
+  useEffect(() => {
     const video = videoRef.current;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: "top top+=3", // Trigger after 10px scroll
-        end: "100% top",
-        scrub: 1.5,
-        pin: true,
-      },
-    });
-
-    tl.to(videoBox, {
-      clipPath: "circle(100% at 50% 50%)",
-      ease: "power2.out",
-    });
+    gsap.set(video, { opacity: 0, clipPath: "circle(6% at 50% 50%)" });
 
     ScrollTrigger.create({
-      trigger: container,
-      start: "top top+=10",
-      once: true,
-      onEnter: () => video.play(),
+      trigger: containerRef.current,
+      start: "top top+=5px",
+      end: "+=600px",
+      scrub: true,
+      onUpdate: (self) => {
+        const p = self.progress;
+        gsap.to(video, { opacity: p, duration: 0.3 });
+        gsap.to(video, {
+          clipPath: `circle(${6 + 94 * p}% at 50% 50%)`,
+          ease: "power2.out",
+        });
+        if (p > 0.01 && video.paused) video.play();
+      },
     });
   }, []);
 
   return (
-    <section
-      ref={videoContainerRef}
-      className="vd-pin-section h-[100vh] relative overflow-hidden"
-    >
-      <div
-        ref={videoBoxRef}
-        className="w-full h-full video-box"
-        style={{
-          clipPath: "circle(6% at 50% 50%)",
-          transition: "clip-path 0.5s ease-out",
-        }}
+    <section ref={containerRef} className="vd-pin-section">
+      {/* Pink overlay filter */}
+      <div className="absolute inset-0 bg-pink-300 opacity-50 z-40 pointer-events-none" />
+
+      {/* Video with reveal clip-path */}
+      <video
+        ref={videoRef}
+        className="video-box"
+        muted
+        loop
+        playsInline
+        preload="auto"
       >
-        <video
-          ref={videoRef}
-          src="/public/assets/videos/pin-video.mp4"
-          className="w-full h-full object-cover"
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
-      </div>
+        <source src="/assets/videos/pin-video.mp4" type="video/mp4" />
+      </video>
     </section>
   );
 };
 
 export default VideoPinSection;
-
-

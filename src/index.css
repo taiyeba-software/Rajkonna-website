@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "Spectral-Bold";
-  src: url("/assets/fonts/cursive_like/Spectral-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
+  font-family: "EduNSWACTCursive-SemiBold";
+  src: url("/assets/fonts/cursive_like/EduNSWACTCursive-SemiBold.ttf") format("truetype");
+  font-weight: semi-bold;
+  font-style: italic;
 }
 
 @font-face {
   font-family: "MPLUS-Rounded";
   src: url("/assets/fonts/normal/MPLUSRounded1c-Bold.ttf") format("truetype");
-  font-weight: bold;
+  font-weight: semi-bold;
   font-style: normal;
 }
 
@@ -119,7 +119,11 @@
     text-align: center;
   }
 
-
+  html{
+    
+    scroll-behavior: smooth;
+    
+  }
   * {
     @apply border-border;
   }
@@ -207,23 +211,27 @@
 
   /* CSS for the video section container */
     .vd-pin-section {
-    position: relative; /* Required for z-index to work */
-    z-index: 1; /* Sits underneath the glitter section */
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color:hsl(340,26%,70%) /* Fallback background */
-  }
+      @apply relative h-screen overflow-hidden z-30;
+    }
+    .video-box {
+      @apply absolute top-0 left-0 w-full h-full object-cover;
+      z-index: 30;
+      will-change: clip-path, opacity;
+    }
 
     .star-background-container {
-    position: fixed; /* Lock it to the viewport */
-    inset: 0;
-    background-color: hsl(340, 26%, 70%);
-    z-index: 0; /* Set z-index to 0 */
-    pointer-events: none; /* VERY IMPORTANT: Allows clicks/scrolls to go through to the content below */
-    overflow: hidden;
-  }
+      @apply fixed inset-0 pointer-events-none overflow-hidden z-50;
+    }
+
+    .glitter-section {
+      @apply sticky top-0 w-full h-screen bg-pink-300 opacity-50 pointer-events-none z-40;
+    }
+
+    .home-hero-container {
+      @apply relative h-screen overflow-hidden flex items-center justify-center;
+      z-index: 60;
+    }
+
   
   /* New wrapper for all page content */
     .content-wrapper {
@@ -242,11 +250,7 @@
 
 
           /* in index.css or Tailwind config */
-      .home-hero-container {
-        position: relative;
-        height: 100vh;
-        overflow: hidden;
-      }
+      
 
       .bg-pink-300 {
         /* adjust to match your pink background */
