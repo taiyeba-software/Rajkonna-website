@@ -1,53 +1,64 @@
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useMediaQuery } from "react-responsive";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const VideoPinSection = () => {
-  const isMobile = useMediaQuery({
-    query: "(max-width: 768px)",
-  });
+  const videoContainerRef = useRef(null);
+  const videoBoxRef = useRef(null);
+  const videoRef = useRef(null);
 
   useGSAP(() => {
-    // Only run the animation on non-mobile devices
-    if (!isMobile) {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".vd-pin-section",
-          start: "top top", // Starts when the top of the section hits the top of the viewport
-          end: "200% top", // Ends after scrolling 200% of the viewport height
-          scrub: 1.5,      // Smoothly links animation to scroll
-          pin: true,       // Pins the section in place during the animation
-        },
-      });
+    const container = videoContainerRef.current;
+    const videoBox = videoBoxRef.current;
+    const video = videoRef.current;
 
-      // Animate the clip-path from its initial small circle to a full one
-      tl.to(".video-box", {
-        clipPath: "circle(100% at 50% 50%)",
-        ease: "power1.inOut",
-      });
-    }
-  }, [isMobile]); // Dependency array ensures this runs if isMobile changes
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top top+=3", // Trigger after 10px scroll
+        end: "100% top",
+        scrub: 1.5,
+        pin: true,
+      },
+    });
+
+    tl.to(videoBox, {
+      clipPath: "circle(100% at 50% 50%)",
+      ease: "power2.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: container,
+      start: "top top+=10",
+      once: true,
+      onEnter: () => video.play(),
+    });
+  }, []);
 
   return (
-    <section className="vd-pin-section">
+    <section
+      ref={videoContainerRef}
+      className="vd-pin-section h-[100vh] relative overflow-hidden"
+    >
       <div
-        className="size-full video-box"
+        ref={videoBoxRef}
+        className="w-full h-full video-box"
         style={{
-          // Set the initial state of the clip-path
-          clipPath: isMobile
-            ? "circle(100% at 50% 50%)" // Fully visible on mobile
-            : "circle(6% at 50% 50%)",   // Starts as a small circle on desktop
+          clipPath: "circle(6% at 50% 50%)",
+          transition: "clip-path 0.5s ease-out",
         }}
       >
         <video
-          className="size-full object-cover"
-          src="assets/videos/pin-video.mp4"
-          playsInline
+          ref={videoRef}
+          src="/public/assets/videos/pin-video.mp4"
+          className="w-full h-full object-cover"
           muted
           loop
-          autoPlay
+          playsInline
+          preload="auto"
         />
       </div>
     </section>
@@ -55,3 +66,5 @@ const VideoPinSection = () => {
 };
 
 export default VideoPinSection;
+
+
