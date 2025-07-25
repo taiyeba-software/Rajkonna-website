@@ -13,6 +13,7 @@
     "@gsap/react": "^2.1.2",
     "@radix-ui/react-toast": "^1.2.14",
     "@react-spring/web": "^10.0.1",
+    "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.1.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

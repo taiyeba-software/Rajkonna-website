@@ -11,10 +11,6 @@ export const HeroSection = () => {
       <StarBackground/>
       <StarBackground/>
       <StarBackground/>
-      <StarBackground/>
-      <StarBackground/>
-      <StarBackground/>
-      <StarBackground/>
       
       <h1
         className="text-[60px] sm:text-[72px] font-bold text-foreground text-glow"
