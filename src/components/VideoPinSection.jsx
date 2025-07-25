@@ -32,7 +32,7 @@ export const VideoPinSection = () => {
 
   return (
   <div
-    id="video-section"
+    id="home"
     ref={videoContainer}
     className="relative w-full h-[110vh]  sm:h-[150vh] overflow-hidden z-0"
   >

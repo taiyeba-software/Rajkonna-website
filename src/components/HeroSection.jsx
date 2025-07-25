@@ -1,12 +1,21 @@
 import { motion } from "framer-motion";
 import { CloudRain } from "lucide-react";
+import { StarBackground } from "./StarBackground";
 
 
 export const HeroSection = () => {
   return (
     <div
-      className="fixed top-[110px] left-0 w-full z-10 text-center px-4 pointer-events-none"
+      className="absolute top-[110px] left-0 w-full z-10 text-center px-4 pointer-events-none"
     >
+      <StarBackground/>
+      <StarBackground/>
+      <StarBackground/>
+      <StarBackground/>
+      <StarBackground/>
+      <StarBackground/>
+      <StarBackground/>
+      
       <h1
         className="text-[60px] sm:text-[72px] font-bold text-foreground text-glow"
         style={{ fontFamily: "MPLUSRounded" }}

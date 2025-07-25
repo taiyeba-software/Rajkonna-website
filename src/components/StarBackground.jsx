@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";// Adjust the path as needed
+
 
 export const StarBackground = () => {
   const [stars, setStars] = useState([]);

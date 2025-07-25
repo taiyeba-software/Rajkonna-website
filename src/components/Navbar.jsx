@@ -63,7 +63,7 @@ export const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center gap-4">
           <a href="#hero" className="text-xl font-bold text-primary flex items-center">
-            <img src="/logo.svg" alt="Brand Logo" className="h-6" />
+            <img src="/images/Rajkonna.png" alt="Brand Logo" className="h-10" />
           </a>
         </div>
 
